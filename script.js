@@ -1,8 +1,7 @@
 
 (function () {
-    const anim_dur = 100;
-    const scroll_threshold = 350;
-    const accumulator_clamp = 600;
+    let lastScrollTime = 0;
+    const coolDownDelay = 1500;
 
     const state_classes = [
         'is-current',
@@ -13,7 +12,6 @@
     let idleTimer = null;
     let isAni = false;
     let currentIndex = 0;
-    let scrollAccumulator = 0;
 
     const page = Array.from(document.querySelectorAll('.bg-carousel'));
 
@@ -22,11 +20,16 @@
     }
 
     function settleLayout(index) {
-        page.forEach(clearStateClasses);
-        page[index].classList.add('is-current');
-        if (index + 1 < page.length) {
-            page[index + 1].classList.add('is-next');
-        }
+        page.forEach((i) => {
+            clearStateClasses(page);
+            if (i === index) {
+                page.classList.add('is-current');
+            } else if (i > index) {
+                page.classList.add('is-next');
+            } else if (i < index) {
+                page.classList.add('is-prev');
+            }
+        });
     }
 
     function transitionTo(nextIndex, onComplete) {
@@ -42,14 +45,17 @@
         const incoming = page[nextIndex];
 
         if (goingforward) { // if the user scrolls down, the code inside the bracket runs
-            incoming.classList.remove('is-next'); // This page is currently assigned the is-next class. This line removes it from waiting stage and brings it in ready to move
-
-            outgoing.classList.remove('is-current', 'is-next'); // is-current page is still visible, so this line strips away that page from active status.
-        } else {
-            incoming.classList.remove('is-current', 'is-next');
             incoming.classList.add('is-current');
+            incoming.classList.remove('is-next'); // This page is currently assigned the is-next class. This line removes it from waiting stage and brings it in ready to move
+            
+            outgoing.classList.add('is-prev');
+            outgoing.classList.remove('is-current'); // is-current page is still visible, so this line strips away that page from active status.
+        } else {
+            incoming.classList.add('is-current');
+            incoming.classList.remove('is-prev');
 
-            outgoing.classList.remove('is-current', 'is-next');  
+            outgoing.classList.add('is-next');
+            outgoing.classList.remove('is-current');  
         }
 
         currentIndex = nextIndex;
@@ -62,23 +68,21 @@
     }
 
     function handleScrollDelta(deltaY) {
-        if (isAni) return;
-
-        scrollAccumulator += deltaY;
-        scrollAccumulator = Math.max(
-            -accumulator_clamp,
-            Math.min(accumulator_clamp, scrollAccumulator)
-        );
-        if (Math.abs(scrollAccumulator) >= scroll_threshold) {
-            const direction = scrollAccumulator > 0 ? 1 : -1;
-            const nextIndex = currentIndex + direction;
-
-            if (nextIndex >= 0 && nextIndex < page.length) {
-                transitionTo(nextIndex);
-            }
-            scrollAccumulator = 0;
+        const currentTime = Date.now();
+        if (currentTime - lastScrollTime < coolDownDelay) {
+            return;
         }
-    }
+
+        const direction = deltaY > 0 ? 1 : -1;
+        const nextIndex = currentIndex + direction; 
+
+        if (nextIndex >= 0 && nextIndex < page.length) {
+            transitionTo(nextIndex);
+
+            lastScrollTime = currentTime;
+        }
+
+        }
 
     window.addEventListener('wheel', (e) => {
         e.preventDefault();

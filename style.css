@@ -4,7 +4,6 @@
 }
 
 * {
-    background-color: rgb(87, 84, 84);
     font-family: Satoshi-medium;
     color: white;
     margin: 0;
@@ -52,9 +51,17 @@
 }
 
 .bg1 {
-    background-image: url(Photos/Slide-cafe.png);
+    background-image: url(Photos/Slide-cafe-nbg.png);
 }
 
 .bg2 {
     background-image: url(Photos/code-page.png);
 }
+
+.bg3 {
+    background-image: url(Photos/CSE_CSPIT.png);
+}
+
+.bg--1 {background-color: rgb(20, 20, 20);}
+.bg--2 {background-color: rgb(40, 40, 84);}
+.bg--3 {background-color: rgb(198, 250, 251);}
