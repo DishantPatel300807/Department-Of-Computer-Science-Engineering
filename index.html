@@ -7,29 +7,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="navigation">
-        <nav>
-            <a href="#About" class="nav-link">About</a>
-            <a href="#Faculty" class="nav-link">Faculty</a>
-            <a href="#Academics" class="nav-link">Academics</a>
-            <a href="#Contact Us" class="nav-link">Contact Us</a>
-        </nav>
-    </div>
+    <div class="page-container">
+        <div class="navigation">
+            <nav class="navi">
+                <a href="#About" id="nav-link" class="about">About</a>
+                <a href="#Faculty" id="nav-link" class="faculty">Faculty</a>
+                <a href="#Academics" id="nav-link" class="academic">Academics</a>
+                <a href="#Contact Us" id="nav-link" class="contact">Contact Us</a>
+            </nav>
+        </div>
 
-    <main id="stage" class="stage">
-        <div class="bg-carousel bg--1" data-index="0">
-            <div class="bk-img bg1"></div>
+        <div class="description">
+            <div class="text cafe">
+                <p>
+                    Located across three prime spots on campus, 
+                    our student cafes are designed for every moment
+                    of your day. Whether you need a quick morning 
+                    espresso before a lecture, a quiet corner for 
+                    group study, or a cozy place to unwind with friends
+                    between classes, each location offers freshly brewed
+                    coffee, delicious pastries, and the ideal atmosphere
+                    to recharge.
+                </p>
+            </div>
+            <div class="text lab">
+                <p>
+                    Description for Lab.
+                </p>
+            </div>
         </div>
-        <div class="bg-carousel bg--2" data-index="1">
-            <div class="bk-img bg2"></div>
-        </div>
-        <div class="bg-carousel bg--3" data-index="2">
-            <div class="bk-img bg3"></div>
-        </div>
-        <div class="bg-carousel bg--4" data-index="3">
-            <div class="bk-img bg4"></div>
-        </div>
-    </main>
+
+        <main id="stage" class="stage">
+            <div class="bg-carousel bg--1" data-index="0">
+                <div class="bk-img bg1"></div>
+            </div>
+            <div class="bg-carousel bg--2" data-index="1">
+                <div class="bk-img bg2"></div>
+            </div>
+            <div class="bg-carousel bg--3" data-index="2">
+                <div class="bk-img bg3"></div>
+            </div>
+            <div class="bg-carousel bg--4" data-index="3">
+                <div class="bk-img bg4"></div>
+            </div>
+        </main>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

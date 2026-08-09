@@ -18,7 +18,7 @@
     width: 100%;
 }
 
-.nav-link {
+#nav-link {
     text-decoration: none;
     font-weight: bold;
     z-index: 1;
@@ -66,6 +66,7 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    transition: filter 0.4s ease;
 }
 
 .bg1 {
@@ -88,3 +89,45 @@
 .bg--2 {background-color: rgb(40, 40, 84);}
 .bg--3 {background-color: rgb(198, 250, 251);}
 .bg--4 {background-color: rgb(234, 234, 234);}
+
+.description {
+    position: absolute;
+    width: 100%;
+    top: 6%;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 2;
+
+    mix-blend-mode: difference;
+}
+
+.cafe {
+    grid-column: 3;
+}
+
+.text {
+    display: none;
+    padding: 0 2rem;
+    overflow-wrap: break-word;
+}
+
+.page-container:has(.bg--1.is-current) .cafe {
+    display: block;
+}
+.page-container:has(.bg--2.is-current) .lab {
+    display: block;
+}
+
+.page-container:has(.navi a:hover) .bk-img {
+    filter: blur(10px);
+}
+
+.page-container:has(:is(.faculty, .about, .academic, .contact):hover) .description {
+    opacity: 1;
+    transform: translateY(0);
+}
