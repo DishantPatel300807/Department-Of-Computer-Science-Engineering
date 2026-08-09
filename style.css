@@ -10,8 +10,26 @@
     padding: 0;
 }
 
-.navigation {
-    display: flow-root;
+.navigation nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 1;
+    mix-blend-mode: difference;
+    user-select: none;
+}    
+
+.stage {
+    position: relative;
+    z-index: -1;
+    isolation: isolate;
 }
 
 .bg-carousel {
@@ -62,6 +80,11 @@
     background-image: url(Photos/CSE_CSPIT.png);
 }
 
+.bg4 {
+    background-image: url(Photos/desk.jpg);
+}
+
 .bg--1 {background-color: rgb(20, 20, 20);}
 .bg--2 {background-color: rgb(40, 40, 84);}
 .bg--3 {background-color: rgb(198, 250, 251);}
+.bg--4 {background-color: rgb(234, 234, 234);}
