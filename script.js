@@ -2,6 +2,7 @@
 (function () {
     let lastScrollTime = 0;
     const coolDownDelay = 1500;
+    const anim_dur = 1;
 
     const state_classes = [
         'is-current',
@@ -15,25 +16,25 @@
 
     const page = Array.from(document.querySelectorAll('.bg-carousel'));
 
-    function clearStateClasses(page) {
-        state_classes.forEach((cls) => page.classList.remove(cls));
+    function clearStateClasses(el) {
+        state_classes.forEach((cls) => el.classList.remove(cls));
     }
 
     function settleLayout(index) {
-        page.forEach((i) => {
-            clearStateClasses(page);
+        page.forEach((el, i) => {
+            clearStateClasses(el);
             if (i === index) {
-                page.classList.add('is-current');
+                el.classList.add('is-current');
             } else if (i > index) {
-                page.classList.add('is-next');
+                el.classList.add('is-next');
             } else if (i < index) {
-                page.classList.add('is-prev');
+                el.classList.add('is-prev');
             }
         });
     }
 
     function transitionTo(nextIndex, onComplete) {
-        if (nextIndex == currentIndex || nextIndex < 0 || nextIndex >= page.length) {
+        if (isAni || nextIndex == currentIndex || nextIndex < 0 || nextIndex >= page.length) {
             return;
         }
 
@@ -88,4 +89,6 @@
         e.preventDefault();
         handleScrollDelta(e.deltaY);
     }, {passive : false});
+
+    settleLayout(0);
 })();

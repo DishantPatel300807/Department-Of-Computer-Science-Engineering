@@ -85,10 +85,20 @@
     background-image: url(Photos/desk.jpg);
 }
 
+.bg5 {
+    background-image: url(Photos/College-building.jpg);
+}
+
+.bg6 {
+    background-image: url(Photos/Museum.jpg);
+}
+
 .bg--1 {background-color: rgb(20, 20, 20);}
 .bg--2 {background-color: rgb(40, 40, 84);}
 .bg--3 {background-color: rgb(198, 250, 251);}
 .bg--4 {background-color: rgb(234, 234, 234);}
+.bg--5 {background-color: rgb(255, 243, 156);}
+.bg--6 {background-color: rgb(255, 255, 255);}
 
 .description {
     position: absolute;
@@ -130,4 +140,21 @@
 .page-container:has(:is(.faculty, .about, .academic, .contact):hover) .description {
     opacity: 1;
     transform: translateY(0);
+}
+
+@media screen and (max-width: 600px) {
+
+    body {
+        font-family: Satoshi-medium;
+        color: white;
+    }
+
+    .page-container {
+        width: 95%;
+    }
+
+    .navi {
+        display: none;
+    }
+    
 }
