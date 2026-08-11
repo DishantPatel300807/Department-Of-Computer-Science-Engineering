@@ -2,7 +2,7 @@
 (function () {
     let lastScrollTime = 0;
     const coolDownDelay = 1500;
-    const anim_dur = 1;
+    const anim_dur = 600;
 
     const state_classes = [
         'is-current',
