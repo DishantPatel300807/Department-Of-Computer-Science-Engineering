@@ -2,7 +2,7 @@
 (function () { // IIFE Private Bubble. Variables created inside won't effect the code outside of the bubble
     let lastScrollTime = 0;
     const coolDownDelay = 5; // Duration between two scrolls so animation does not get gliched if scrolled too fast.
-    const anim_dur = 600;
+    const anim_dur = 600; // Time line of animation
 
     const state_classes = [
         'is-current',
