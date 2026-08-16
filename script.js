@@ -25,25 +25,37 @@
             clearStateClasses(el);
             if (i === index) {
                 el.classList.add('is-current');
-            } else if (i > index) {
-                el.classList.add('is-next');
-            } else if (i < index) {
+            } else if (i === index - 1 || (index === 0 && i === page.length - 1)) {
                 el.classList.add('is-prev');
+            } else {
+                el.classList.add('is-next');
             }
         });
     }
 
     function transitionTo(nextIndex, onComplete) {
-        if (isAni || nextIndex == currentIndex || nextIndex < 0 || nextIndex >= page.length) {
+        if (isAni || nextIndex == currentIndex) {
             return; // This line tells the sccript not to do anything when the animation is happening, or we are out of slides
         }
 
         clearTimeout(idleTimer);
         isAni = true;
 
-        const goingforward = nextIndex > currentIndex;
+        let goingforward = nextIndex > currentIndex;
+        if (currentIndex === 0 && nextIndex === page.length - 1) goingforward = false;
+        if (currentIndex === page.length - 1 && nextIndex === 0) goingforward = true;
         const outgoing = page[currentIndex];
         const incoming = page[nextIndex];
+
+        if (goingforward) {
+            incoming.classList.remove('is-prev');
+            incoming.classList.add('is-next');
+        } else {
+            incoming.classList.remove('is-next');
+            incoming.classList.add('is-prev');
+        }
+
+        void incoming.offsetWidth;
 
         if (goingforward) { // if the user scrolls down, the code inside the bracket runs
             // Slide the new slide in and push the old to the left.
@@ -77,13 +89,16 @@
         }
 
         const direction = deltaY > 0 ? 1 : -1; // Down scroll = +1, Up scroll = -1
-        const nextIndex = currentIndex + direction; 
+        let nextIndex = currentIndex + direction; 
 
-        if (nextIndex >= 0 && nextIndex < page.length) {
-            transitionTo(nextIndex); // Calling the function of slide change
-
-            lastScrollTime = currentTime; // Resetting the timer.
+        if (nextIndex < 0) {
+            nextIndex = page.length - 1;
+        } else if (nextIndex >= page.length) {
+            nextIndex = 0;
         }
+
+        transitionTo(nextIndex)
+        lastScrollTime = currentTime; // Resetting the timer.
 
         }
 

@@ -28,6 +28,9 @@
 
 .stage {
     position: relative;
+    display: flex;
+    width: max-content;
+    transition: transform 0.1s ease-out;
     z-index: -1;
     isolation: isolate;
 }
