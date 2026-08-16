@@ -42,8 +42,8 @@
         isAni = true;
 
         let goingforward = nextIndex > currentIndex;
-        if (currentIndex === 0 && nextIndex === page.length - 1) goingforward = false;
-        if (currentIndex === page.length - 1 && nextIndex === 0) goingforward = true;
+        if (currentIndex === 0 && nextIndex === page.length - 1) goingforward = false; // If scrolled back from 1st slide, makes the animation reverse
+        if (currentIndex === page.length - 1 && nextIndex === 0) goingforward = true; // If scrolled forward from last slide, it makes the animation in forward direction
         const outgoing = page[currentIndex];
         const incoming = page[nextIndex];
 
@@ -55,7 +55,7 @@
             incoming.classList.add('is-prev');
         }
 
-        void incoming.offsetWidth;
+        void incoming.offsetWidth; // Tells the browser not to ruin the animation.
 
         if (goingforward) { // if the user scrolls down, the code inside the bracket runs
             // Slide the new slide in and push the old to the left.
@@ -92,9 +92,9 @@
         let nextIndex = currentIndex + direction; 
 
         if (nextIndex < 0) {
-            nextIndex = page.length - 1;
+            nextIndex = page.length - 1; // If scrolled past the first slide, it will loop the last slide
         } else if (nextIndex >= page.length) {
-            nextIndex = 0;
+            nextIndex = 0; // If scrolled past the last slide, it will loop the first slide.
         }
 
         transitionTo(nextIndex)
