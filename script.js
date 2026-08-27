@@ -1,7 +1,7 @@
 
 (function () { // IIFE Private Bubble. Variables created inside won't effect the code outside of the bubble
     let lastScrollTime = 0;
-    const coolDownDelay = 5; // Duration between two scrolls so animation does not get gliched if scrolled too fast.
+    const coolDownDelay = 100; // Duration between two scrolls so animation does not get gliched if scrolled too fast.
     const anim_dur = 600; // Time line of animation
 
     const state_classes = [
@@ -21,6 +21,10 @@
     }
 
     function settleLayout(index) {
+        page.forEach((el) => {
+            el.style.transition = 'none';
+        });
+
         page.forEach((el, i) => {
             clearStateClasses(el);
             if (i === index) {
@@ -30,6 +34,12 @@
             } else {
                 el.classList.add('is-next');
             }
+        });
+
+        void page[0].offsetWidth; // Force layout
+
+        page.forEach((el) => {
+            el.style.transition = '';
         });
     }
 
@@ -47,6 +57,8 @@
         const outgoing = page[currentIndex];
         const incoming = page[nextIndex];
 
+        incoming.style.transition = 'none';
+
         if (goingforward) {
             incoming.classList.remove('is-prev');
             incoming.classList.add('is-next');
@@ -56,6 +68,7 @@
         }
 
         void incoming.offsetWidth; // Tells the browser not to ruin the animation.
+        incoming.style.transition = '';
 
         if (goingforward) { // if the user scrolls down, the code inside the bracket runs
             // Slide the new slide in and push the old to the left.
@@ -84,9 +97,14 @@
 
     function handleScrollDelta(deltaY) {
         const currentTime = Date.now();
-        if (currentTime - lastScrollTime < coolDownDelay) {
-            return; // When scrolled just after a slide change, it ignores the scroll
+        const timeDiff = currentTime - lastScrollTime;
+        lastScrollTime = currentTime; // Update timer on EVERY scroll event
+
+        if (timeDiff < coolDownDelay) { 
+            return; // Ignore inertia wheel events that happen too fast
         }
+        
+        if (isAni) return;
 
         const direction = deltaY > 0 ? 1 : -1; // Down scroll = +1, Up scroll = -1
         let nextIndex = currentIndex + direction; 
@@ -97,9 +115,7 @@
             nextIndex = 0; // If scrolled past the last slide, it will loop the first slide.
         }
 
-        transitionTo(nextIndex)
-        lastScrollTime = currentTime; // Resetting the timer.
-
+        transitionTo(nextIndex);
         }
 
     window.addEventListener('wheel', (e) => {
